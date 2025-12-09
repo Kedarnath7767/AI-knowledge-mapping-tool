@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #fff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#4A86E8", "font": {"color": "black"}, "id": "Albert Einstein", "label": "Albert Einstein", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "1905", "label": "1905", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Isaac Newton", "label": "Isaac Newton", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "1687", "label": "1687", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Elon Musk", "label": "Elon Musk", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "2002", "label": "2002", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "NASA", "label": "NASA", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "ISS", "label": "ISS", "shape": "dot", "size": 18}, {"color": "#6FD88F", "font": {"color": "black"}, "id": "Google", "label": "Google", "shape": "dot", "size": 28}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Transformer", "label": "Transformer", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "OpenAI", "label": "OpenAI", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "GPT", "label": "GPT", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Johannes Gutenberg", "label": "Johannes Gutenberg", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "the 15th century", "label": "the 15th century", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Climate change", "label": "Climate change", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "affects", "label": "affects", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Philosopher Plato", "label": "Philosopher Plato", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Academy", "label": "Academy", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Aristotle", "label": "Aristotle", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Plato", "label": "Plato", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "The Industrial Revolution", "label": "The Industrial Revolution", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Britain", "label": "Britain", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "The French Revolution", "label": "The French Revolution", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Europe", "label": "Europe", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "The Declaration of Independence", "label": "The Declaration of Independence", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "1776", "label": "1776", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "The Second World War", "label": "The Second World War", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "1945", "label": "1945", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "The United Nations", "label": "The United Nations", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "World War II", "label": "World War II", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "India", "label": "India", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "5th", "label": "5th", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Machine learning models", "label": "Machine learning models", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "require", "label": "require", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Mark Zuckerberg", "label": "Mark Zuckerberg", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "2004", "label": "2004", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Apple", "label": "Apple", "shape": "dot", "size": 18}, {"color": "#6FD88F", "font": {"color": "black"}, "id": "first", "label": "first", "shape": "dot", "size": 28}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Apollo 11", "label": "Apollo 11", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "1969", "label": "1969", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Neil Armstrong", "label": "Neil Armstrong", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "The Hubble Space Telescope", "label": "The Hubble Space Telescope", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Earth", "label": "Earth", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "the Nobel Prize in Physics", "label": "the Nobel Prize in Physics", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "1921", "label": "1921", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "The Cold War", "label": "The Cold War", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "USA", "label": "USA", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Wright", "label": "Wright", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Robotics", "label": "Robotics", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "AI", "label": "AI", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "The Milky Way galaxy", "label": "The Milky Way galaxy", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "contains", "label": "contains", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "BERT", "label": "BERT", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Transformer-based models", "label": "Transformer-based models", "shape": "dot", "size": 18}, {"color": "#6FD88F", "font": {"color": "black"}, "id": "use", "label": "use", "shape": "dot", "size": 28}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Self-driving cars", "label": "Self-driving cars", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Smart cities", "label": "Smart cities", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Logic and reason", "label": "Logic and reason", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "form", "label": "form", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "Modern medicine", "label": "Modern medicine", "shape": "dot", "size": 18}, {"color": "#4A86E8", "font": {"color": "black"}, "id": "uses", "label": "uses", "shape": "dot", "size": 18}]);
+                  edges = new vis.DataSet([{"color": "#B5B5B5", "dashes": true, "from": "Albert Einstein", "to": "1905", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Isaac Newton", "to": "1687", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Elon Musk", "to": "2002", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "NASA", "to": "ISS", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Google", "to": "Transformer", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Google", "to": "BERT", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "OpenAI", "to": "GPT", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Johannes Gutenberg", "to": "the 15th century", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Climate change", "to": "affects", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Philosopher Plato", "to": "Academy", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Aristotle", "to": "Plato", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "The Industrial Revolution", "to": "Britain", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "The French Revolution", "to": "Europe", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "The Declaration of Independence", "to": "1776", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "The Second World War", "to": "1945", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "The United Nations", "to": "World War II", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "India", "to": "5th", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Machine learning models", "to": "require", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Mark Zuckerberg", "to": "2004", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Apple", "to": "first", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "first", "to": "Neil Armstrong", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "first", "to": "Wright", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Apollo 11", "to": "1969", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "The Hubble Space Telescope", "to": "Earth", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "the Nobel Prize in Physics", "to": "1921", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "The Cold War", "to": "USA", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Robotics", "to": "AI", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "The Milky Way galaxy", "to": "contains", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Transformer-based models", "to": "use", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "use", "to": "Self-driving cars", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "use", "to": "Smart cities", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Logic and reason", "to": "form", "width": 2}, {"color": "#B5B5B5", "dashes": true, "from": "Modern medicine", "to": "uses", "width": 2}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"borderWidth": 1}, "edges": {"smooth": {"type": "continuous"}}, "physics": {"barnesHut": {"gravitationalConstant": -2000, "centralGravity": 0.3, "springLength": 160}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

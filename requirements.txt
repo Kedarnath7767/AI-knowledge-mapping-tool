@@ -1,0 +1,9 @@
+streamlit
+pandas
+numpy
+spacy
+networkx
+sentence-transformers==2.6.1
+torch==2.2.2
+pyvis
+    
