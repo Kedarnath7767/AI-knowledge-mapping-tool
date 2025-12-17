@@ -41,7 +41,7 @@ Every uploaded dataset is processed through:
 ---
 
 ### 🔍 3. Semantic Search
-Powered by `sentence-transformers (all-MiniLM-L6-v2)`:
+Powered by `sentence-transformers`:
 
 - Generate embeddings  
 - Search semantically similar sentences  
@@ -125,42 +125,6 @@ Users can configure:
 | Storage | CSV / JSON / Pickle |
 | Deployment | Docker + Cloud VM |
 | Authentication | Custom JSON-based |
-
----
-
-# 📂 Project Structure
-
-```
-AI-KnowMap/
-│── main.py
-│── requirements.txt
-│── users.json
-│── embeddings.pkl
-│── knowledge_graph.html
-│── feedback.csv
-│── sample_dataset.csv
-│── README.md
-```
-
----
-
-# 🔧 Installation
-
-### 1️⃣ Clone the Repository
-```bash
-git clone <your-repo-url>
-cd AI-KnowMap
-```
-
-### 2️⃣ Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 3️⃣ Run the App
-```bash
-streamlit run main.py
-```
 
 ---
 
