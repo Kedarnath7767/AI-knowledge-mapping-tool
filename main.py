@@ -1020,7 +1020,7 @@ elif choice == "🔍 Semantic Search":
         if st.button("🚀 Generate Embeddings"):
             try:
                 with st.spinner("Loading MiniLM model..."):
-                    model = SentenceTransformer("all-MiniLM-L6-v2")
+                    model = SentenceTransformer("TRANSFORMER_MODEL")
 
                 with st.spinner("Generating embeddings... This may take a minute."):
                     embeddings = model.encode(
@@ -1577,4 +1577,5 @@ elif choice == "⚙️ User Preferences":
 # Sidebar user display
 st.sidebar.markdown("---")
 st.sidebar.info(f"🔐 Logged in as: **{st.session_state.username}**")
+
 
